@@ -29,8 +29,8 @@ namespace LojaAspNet
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
             services.ResolveDatabaseDependencies(Configuration);
+            services.AddControllersWithViews();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -41,7 +41,8 @@ namespace LojaAspNet
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/erro/500");
+                app.UseStatusCodePagesWithRedirects("/erro/{0}");
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -49,6 +50,7 @@ namespace LojaAspNet
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -56,6 +58,7 @@ namespace LojaAspNet
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

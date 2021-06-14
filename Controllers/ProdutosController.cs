@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LojaAspNet.Data;
 using LojaAspNet.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LojaAspNet.Controllers
 {
@@ -41,6 +39,7 @@ namespace LojaAspNet.Controllers
             return View(produto);
         }
 
+        [Authorize(Roles = "Funcionario")]
         public IActionResult Create()
         {
             return View();
@@ -59,6 +58,7 @@ namespace LojaAspNet.Controllers
             return View(produto);
         }
 
+        [Authorize(Roles = "Funcionario")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -106,6 +106,7 @@ namespace LojaAspNet.Controllers
             return View(produto);
         }
 
+        [Authorize(Roles = "Funcionario")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
